@@ -3,7 +3,6 @@ package com.mooo.amjansen.transaction;
 import com.mooo.amjansen.journal.*;
 import com.mooo.amjansen.journal.action.TestJournalAction;
 import junit.framework.TestCase;
-import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;

@@ -4,7 +4,8 @@ import com.mooo.amjansen.journal.JournalAction;
 import com.mooo.amjansen.utils.NUIDGenerator;
 import com.mooo.amjansen.utils.StreamUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.

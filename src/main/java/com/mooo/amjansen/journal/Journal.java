@@ -2,7 +2,6 @@ package com.mooo.amjansen.journal;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 
 /**
  * Created with IntelliJ IDEA.
