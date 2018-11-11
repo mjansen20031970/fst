@@ -7,6 +7,15 @@ import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+/**
+ * Created with IntelliJ IDEA.
+ * User: matthias
+ * Date: 26.09.18
+ * Time: 12:30
+ *
+ * To change this template use File | Settings | File Templates.
+ *
+ */
 public class NUIDGenerator {
 
     private static Logger logger = LoggerFactory.getLogger(NUIDGenerator.class);

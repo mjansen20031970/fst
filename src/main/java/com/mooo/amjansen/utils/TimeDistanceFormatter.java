@@ -2,7 +2,16 @@ package com.mooo.amjansen.utils;
 
 import java.text.DecimalFormat;
 
-public class TimeDistanceFormater {
+/**
+ * Created with IntelliJ IDEA.
+ * User: matthias
+ * Date: 26.09.18
+ * Time: 12:30
+ *
+ * To change this template use File | Settings | File Templates.
+ *
+ */
+public class TimeDistanceFormatter {
 
     public static final String DELIM = ":";
     public static final String DELIMPOINT = ".";
