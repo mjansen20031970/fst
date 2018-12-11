@@ -15,7 +15,7 @@ public class FileLock {
      * Standard-Wert, in Millisekunden, für die maximale Dauer einer
      * Anforderung für einen Lock.
      */
-    private long timeout = 3600000;
+    private static long TIMEOUT = 3600000;
 
     private String key = null;
     private int refCounter = 0;
@@ -78,7 +78,7 @@ public class FileLock {
         return --refCounter;
     }
 
-    private int acquire(Token token, long timeout) throws IOException {
+    private int acquire(Token token, long timeout) throws IOException, TimeoutException {
 
         long endTime = timeout + System.currentTimeMillis();
 
@@ -104,7 +104,7 @@ public class FileLock {
 
             } else if ((token.recursions == 0) && (System.currentTimeMillis() >= endTime)) {
                 waiter.remove(token);
-                throw new IOException(new TimeoutException("timeout is expired"));
+                throw new TimeoutException("timeout is expired");
             }
 
         }
@@ -282,6 +282,15 @@ public class FileLock {
     }
 
     public void acquire(boolean shared) throws IOException {
+        try {
+            acquire(shared, TIMEOUT);
+        } catch (TimeoutException e) {
+            logger.warn("global default-timeout is expired", e);
+            throw new IOException(e);
+        }
+    }
+
+    public void acquire(boolean shared, long timeout) throws IOException, TimeoutException {
         synchronized (this) {
             acquire(new Token(shared ? Token.READER : Token.WRITER), timeout);
 
@@ -295,7 +304,7 @@ public class FileLock {
         }
     }
 
-    public boolean tryAcquire(boolean shared) throws Exception {
+    public boolean tryAcquire(boolean shared) throws IOException {
 
         Thread currentThread = Thread.currentThread();
 

@@ -46,7 +46,6 @@ public class FileLockManagerTest extends TestCase {
         }
     }
 
-
     public void test_0() throws IOException {
 
         FileLock lock1 = manager.openFileLock("test");
@@ -79,6 +78,76 @@ public class FileLockManagerTest extends TestCase {
 
     }
 
+    public void test_01() throws IOException {
+
+        FileLock lock1 = manager.openFileLock("test");
+        lock1.acquire(false);
+
+        FileLock lock2 = manager.openFileLock("test");
+        if (lock2.tryAcquire(false) == false){
+            assertTrue("this lock should be acquired", false);
+        }
+
+        lock2.release();
+        lock2.close();
+
+        lock1.release();
+        lock1.close();
+        
+    }
+
+    public void test_02() throws IOException {
+
+        FileLock lock1 = manager.openFileLock("test");
+        lock1.acquire(false);
+
+        FileLock lock2 = manager.openFileLock("test");
+        if (lock2.tryAcquire(true) == true){
+            assertTrue("this lock should not be acquired", false);
+        }
+
+        lock2.close();
+
+        lock1.release();
+        lock1.close();
+
+    }
+
+    public void test_03() throws IOException {
+
+        FileLock lock1 = manager.openFileLock("test");
+        lock1.acquire(true);
+
+        FileLock lock2 = manager.openFileLock("test");
+        if (lock2.tryAcquire(false) == true){
+            assertTrue("this lock should not be acquired", false);
+        }
+
+        lock2.close();
+
+        lock1.release();
+        lock1.close();
+
+    }
+
+    public void test_04() throws IOException {
+
+        FileLock lock1 = manager.openFileLock("test");
+        lock1.acquire(true);
+
+        FileLock lock2 = manager.openFileLock("test");
+        if (lock2.tryAcquire(true) == false){
+            assertTrue("this lock should be acquired", false);
+        }
+
+        lock2.release();
+        lock2.close();
+
+        lock1.release();
+        lock1.close();
+
+    }
+
     public void test_1() throws IOException, InterruptedException {
 
         new Thread(){
@@ -89,7 +158,7 @@ public class FileLockManagerTest extends TestCase {
 
                     lock2.acquire(true);
 
-                    for (int i=0; i < 10; i++){
+                    for (int i=0; i < 5; i++){
                         System.out.println("waiting --- " + i);
                         Thread.sleep(1000);
                     }
@@ -126,7 +195,7 @@ public class FileLockManagerTest extends TestCase {
 
                     lock2.acquire(false);
 
-                    for (int i=0; i < 10; i++){
+                    for (int i=0; i < 5; i++){
                         System.out.println("waiting --- " + i);
                         Thread.sleep(1000);
                     }
@@ -163,7 +232,7 @@ public class FileLockManagerTest extends TestCase {
 
                     lock2.acquire(false);
 
-                    for (int i=0; i < 10; i++){
+                    for (int i=0; i < 5; i++){
                         System.out.println("waiting --- " + i);
                         Thread.sleep(1000);
                     }
